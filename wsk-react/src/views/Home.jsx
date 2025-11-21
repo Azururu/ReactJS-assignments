@@ -7,7 +7,6 @@ const Home = () => {
 
   const getMedia = async () => {
     try {
-      // Step 1: Fetch media list
       const mediaUrl = import.meta.env.VITE_MEDIA_API + '/media';
       const media = await fetchData(mediaUrl);
       const mediaWithUsers = await Promise.all(
@@ -21,8 +20,6 @@ const Home = () => {
           };
         })
       );
-
-      // Step 4: Save to state
       setMediaArray(mediaWithUsers);
     } catch (err) {
       console.error(err);
