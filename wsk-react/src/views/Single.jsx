@@ -15,6 +15,7 @@ const Single = () => {
         {item.media_type === 'video/mp4' && (
           <video src={item.thumbnail}/>
         )}
+        <p>Owner: {item.username}</p>
         <button onClick={() => navigate(-1)}>Go back</button>
       </dialog>
     </>
