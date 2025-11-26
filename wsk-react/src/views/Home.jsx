@@ -1,35 +1,11 @@
 import MediaRow from '../components/MediaRow.jsx';
-import {useEffect, useState} from 'react';
-import {fetchData} from '../utils/fetchData.js';
+import {useState} from 'react';
+import {useMedia} from '../hooks/apiHooks.js';
 
 const Home = () => {
-  const [mediaArray, setMediaArray] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  const getMedia = async () => {
-    try {
-      const mediaUrl = import.meta.env.VITE_MEDIA_API + '/media';
-      const media = await fetchData(mediaUrl);
-      const mediaWithUsers = await Promise.all(
-        media.map(async (item) => {
-          const userUrl =
-            import.meta.env.VITE_AUTH_API + '/users/' + item.user_id;
-          const user = await fetchData(userUrl);
-          return {
-            ...item,
-            username: user.username,
-          };
-        })
-      );
-      setMediaArray(mediaWithUsers);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    getMedia();
-  });
-
+  const {mediaArray} = useMedia();
   return (
     <>
       <h2>My media</h2>
@@ -46,7 +22,7 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-        {mediaArray.map(media => (
+        {mediaArray?.map(media => (
           <MediaRow key={media.media_id} item={media} />
         ))}
         </tbody>
