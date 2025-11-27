@@ -9,6 +9,7 @@ const RegisterForm = () => {
     password: '',
     email: '',
   };
+
   const doRegister = async (formData) => {
     try {
       const info = await postUser(formData);
@@ -17,6 +18,7 @@ const RegisterForm = () => {
       console.log('register error', error);
     }
   };
+
   const {inputs, handleInputChange, handleSubmit} = useForm(doRegister, initValues);
   console.log(inputs);
   return (
